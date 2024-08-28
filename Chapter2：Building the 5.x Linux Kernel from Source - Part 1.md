@@ -11,7 +11,7 @@
 
 ### 内核发布命名法
 
-![image-20240816183119964](/images/image-20240816183119964.png)
+![image-20240816183119964](./images/image-20240816183119964.png)
 
 现代Linux内核版本号命名法如下：
 
@@ -104,9 +104,9 @@ LTS（长期支持）内核的“生命周期”通常至少为2年，有时会�
 
 ### 从存储库下载特定内核的源代码文件
 
-1.打开链接：https:/ / www. kernel. org
+1.打开链接：[THe Linux Kernel Archiives](https://www.kernel.org)
 
-![image-20240817170555206](C:\Users\SiChuchen\Pictures\typora-images\image-20240817170555206.png)
+![image-20240817170555206](./images/image-20240817170555206.png)
 
 下载 `longterm：5.4.281`，点击该栏的  tarball，开始自动下载，得到 `linux-5.4.281.tar.xz`。
 
@@ -118,12 +118,12 @@ LTS（长期支持）内核的“生命周期”通常至少为2年，有时会�
 wget --https-only -O ./kernel_source/linux-5.4.281.tar.xz https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.4.281.tar.xz
 ```
 
-![image-20240817172127417](C:\Users\SiChuchen\Pictures\typora-images\image-20240817172127417.png)
+![image-20240817172127417](./images/image-20240817172127417.png)
 
 ### 克隆一颗 Git 树
 
 ```bash
-# 完整克隆（Full Clone）：默认的 git clone 会克隆整个仓库，包括所有的提交历史、分支和标签。这意味着你将获得从仓库初始化到最新提交的所有数据。
+# 完整克隆（Full Clone）：默认的 git clone 会克隆整个仓库，包括所有的提交历史、分支和标签。这意味着我们将获得从仓库初始化到最新提交的所有数据。
 git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 
 # --depth : 克隆仓库的深度（历史记录的数量）
@@ -147,11 +147,11 @@ export LLKD_KSRC=${HOME}/kernel_learn/kernel_source/linux-5.4.281
 
 ### 内核源代码树简介
 
-![image-20240817184527226](C:\Users\SiChuchen\Pictures\typora-images\image-20240817184527226.png)
+![image-20240817184527226](./images/image-20240817184527226.png)
 
 我们把内核源代码树根目录下的 Makefile 文件叫做 顶级 Makefile 文件，该文件前几行给出了该 Linux 的版本号等信息。
 
-![image-20240817184815198](C:\Users\SiChuchen\Pictures\typora-images\image-20240817184815198.png)
+![image-20240817184815198](./images/image-20240817184815198.png)
 
 Linux 内核源代码树根目录
 
@@ -160,7 +160,7 @@ Linux 内核源代码树根目录
 |    **顶层文件**    |                                                              |
 |       README       | 项目的 README 文件。它告诉我们内核文档的位置——提示一下，它在名为 Documentation 的目录中——以及如何开始使用它。文档非常重要；它是真实的信息，由内核开发者自己编写。 |
 |      COPYING       | 说明了内核源码发布的许可条款。绝大多数是在知名的 GNU GPL v2（写作 GPL-2.0）许可下发布的。 |
-|    MAINTAINERS     | FAQ：某个模块出问题了，我该联系谁获得支持？这正是这个文件所提供的内容——内核子系统的完整列表，甚至详细到具体组件（例如特定驱动程序）的级别，其状态、当前维护人员、邮件列表、网站等。非常有帮助！还有一个辅助脚本可以帮助你找到该联系的人员或团队：scripts/get_maintainer.pl。 |
+|    MAINTAINERS     | FAQ：某个模块出问题了，我该联系谁获得支持？这正是这个文件所提供的内容——内核子系统的完整列表，甚至详细到具体组件（例如特定驱动程序）的级别，其状态、当前维护人员、邮件列表、网站等。非常有帮助！还有一个辅助脚本可以帮助我们找到该联系的人员或团队：scripts/get_maintainer.pl。 |
 |      Makefile      | 这是内核的顶级 Makefile；kbuild 内核构建系统以及内核模块使用这个 Makefile（至少在最初的构建中）。 |
 | **主要子系统目录** |                                                              |
 |      kernel/       | 核心内核子系统：这里的代码处理进程/线程生命周期、CPU调度、锁定、cgroups、定时器、中断、信号、模块、跟踪等。 |
@@ -218,7 +218,7 @@ Linux内核用来配置和构建内核的基础设施称为kbuild系统。kbuild
 
 |        **Kbuild 组件**        | **简要用途**                                                 |
 | :---------------------------: | ------------------------------------------------------------ |
-| **Config symbol: CONFIG_FOO** | 每个可配置的内核 `FOO` 都由一个 `CONFIG_FOO` 宏表示。根据用户的选择，宏将解析为 y、m 或 n 之一：<br> - **y=yes**：表示将功能内置到内核镜像中 <br> - **m=module**：表示将其构建为单独的对象，即内核模块 <br> - **n=no**：表示不构建该功能 <br> 注意，`CONFIG_FOO` 是一个字母数字字符串（正如我们即将看到的，你可以使用 `make menuconfig` 选项查找配置选项名称，导航到一个配置选项，然后选择 `<Help>` 按钮）。 |
+| **Config symbol: CONFIG_FOO** | 每个可配置的内核 `FOO` 都由一个 `CONFIG_FOO` 宏表示。根据用户的选择，宏将解析为 y、m 或 n 之一：<br> - **y=yes**：表示将功能内置到内核镜像中 <br> - **m=module**：表示将其构建为单独的对象，即内核模块 <br> - **n=no**：表示不构建该功能 <br> 注意，`CONFIG_FOO` 是一个字母数字字符串（正如我们即将看到的，我们可以使用 `make menuconfig` 选项查找配置选项名称，导航到一个配置选项，然后选择 `<Help>` 按钮）。 |
 |       **Kconfig files**       | 这是定义 `CONFIG_FOO` 符号的地方。kbuild 语法指定了它的类型（布尔、三态、[alpha] 数字等）以及依赖关系树。此外，对于基于菜单的配置界面（通过 `make [menu|g|x]config` 调用），它指定了菜单条目本身。 |
 |        **Makefile(s)**        | kbuild 系统使用递归 Makefile 方法。内核源码树根文件夹下的 Makefile 被称为顶级 Makefile，每个子文件夹内的 Makefile 用于构建其中的源码。5.4 vanilla 内核源码中共有 2,500 多个 Makefile！ |
 |     **The .config file**      | 最终，其核心内容——实际的内核配置——在内核源码树根文件夹中生成并存储在一个名为 `.config` 的 ASCII 文本文件中。请妥善保存此文件，它是产品的重要组成部分。 |
@@ -231,7 +231,7 @@ Linux内核用来配置和构建内核的基础设施称为kbuild系统。kbuild
 2. 使用现有发行版的内核配置。
 3. 基于当前加载到内存中的内核模块构建自定义配置。
 
-第一种方法的优点在于简单。内核会处理所有细节，为你提供一个默认配置。缺点是默认配置实际上非常庞大（这里我们是指针对 x86 架构的桌面或服务器系统的构建）——开启了大量的选项，以防万一，这可能导致构建时间非常长，且内核镜像的大小非常大。当然，你可以随后手动配置内核以达到所需的设置。
+第一种方法的优点在于简单。内核会处理所有细节，为我们提供一个默认配置。缺点是默认配置实际上非常庞大（这里我们是指针对 x86 架构的桌面或服务器系统的构建）——开启了大量的选项，以防万一，这可能导致构建时间非常长，且内核镜像的大小非常大。当然，我们可以随后手动配置内核以达到所需的设置。
 
 这引出了一个问题：默认的内核配置存储在哪里？kbuild 系统使用一个优先级列表回退机制来检索默认配置。优先级列表及其顺序（从最高优先级开始）在 `init/Kconfig:DEFCONFIG_LIST` 中指定：
 
@@ -284,7 +284,7 @@ Kconfig 的内核文档中（可以在 https://www.kernel.org/doc/Documentation/
 
 内核代码库本身为各种硬件平台提供了已知的、经过测试的和可工作的内核配置文件。我们只需要选择一个匹配（或最接近匹配）我们的嵌入式目标板。这些内核配置文件位于内核源代码树中的arch/\<arch>/mysql/目录中。配置文件的格式为\<platformname>_defconfig。快速浏览一下;请参阅以下屏幕截图，其中显示了在v5.4 Linux内核代码库上执行的命令ls arch/arm/sms：
 
-![image-20240817200819905](C:\Users\SiChuchen\Pictures\typora-images\image-20240817200819905.png)
+![image-20240817200819905](./images/image-20240817200819905.png)
 
 因此，例如，如果我们正在为硬件平台配置Linux内核，比如说，Samsung Exynos片上系统（SoC），不要将x86-64内核配置文件作为默认值（或简单地尝试使用它），内核不会干净地构建/工作。选择适当的内核配置文件：对于我们这里的示例，arch/arm/exynos_defconfig文件将是一个很好的起点。我们可以将该文件复制到内核源代码树根目录下的.config文件中，然后根据项目的具体需要对其进行微调。
 
@@ -311,7 +311,7 @@ cd ${LLKD_KSRC}
 make LSMOD=/tmp/lsmod.now localmodconfig
 ```
 
-`lsmod` 工具简单地列出了当前驻留在系统（内核）内存中的所有内核模块。我们将在第4章《编写你的第一个内核模块 - LKMs 第1部分》中看到更多相关内容。我们将其输出保存在一个临时文件中，并通过 `LSMOD` 环境变量将该文件传递给 Makefile 的 `localmodconfig` 目标。
+`lsmod` 工具简单地列出了当前驻留在系统（内核）内存中的所有内核模块。我们将在第4章《编写我们的第一个内核模块 - LKMs 第1部分》中看到更多相关内容。我们将其输出保存在一个临时文件中，并通过 `LSMOD` 环境变量将该文件传递给 Makefile 的 `localmodconfig` 目标。
 
 这个目标的任务是配置内核，使其仅包含基本功能和这些内核模块提供的功能，并省略其他部分，从而有效地为我们提供了当前内核（或 `lsmod` 输出所代表的任何内核）的合理复本。我们将在接下来的“开始使用 `localmodconfig` 方法”部分中使用这种技术来配置我们的 5.4 内核。
 
@@ -373,7 +373,7 @@ cd ${LLKD_KSRC}
 make LSMOD=/tmp/lsmod.now localmodconfig
 ```
 
-当执行实际的 `make [...] localmodconfig` 命令时，当前正在构建的内核（例如版本 5.4）和当前实际运行构建的内核（例如版本 5.4.0-150-generic，使用 `$(uname -r)` 获取）之间可能会存在配置选项的差异。在这些情况下，kbuild 系统会在控制台（终端）窗口中显示每一个新的配置选项以及可设置的值。然后，它会提示用户为正在构建的内核中遇到的任何新配置选项选择值。你会看到一系列问题，并需要在命令行中作答。简单来说，这段内容描述了在使用 `localmodconfig` 命令配置内核时，可能会遇到版本差异导致的新配置选项，并解释了用户如何在构建过程中通过命令行选择这些新配置的值。
+当执行实际的 `make [...] localmodconfig` 命令时，当前正在构建的内核（例如版本 5.4）和当前实际运行构建的内核（例如版本 5.4.0-150-generic，使用 `$(uname -r)` 获取）之间可能会存在配置选项的差异。在这些情况下，kbuild 系统会在控制台（终端）窗口中显示每一个新的配置选项以及可设置的值。然后，它会提示用户为正在构建的内核中遇到的任何新配置选项选择值。我们会看到一系列问题，并需要在命令行中作答。简单来说，这段内容描述了在使用 `localmodconfig` 命令配置内核时，可能会遇到版本差异导致的新配置选项，并解释了用户如何在构建过程中通过命令行选择这些新配置的值。
 
 目前，后续只需要按 Enter 接受默认选项
 
@@ -534,7 +534,7 @@ scc@scczx:~/kernel_learn/kernel_source/linux-5.4.281$ ls -la .config
 
 在当前内核源代码树根目录下执行 `make menuconfig`（如果遇到错误，请查看是否是缺少某个包，安装完之后再次尝试）：
 
-![image-20240818135222854](C:\Users\SiChuchen\Pictures\typora-images\image-20240818135222854.png)
+![image-20240818135222854](./images/image-20240818135222854.png)
 
 菜单项前缀符号的含义如下：
 
@@ -556,12 +556,12 @@ scc@scczx:~/kernel_learn/kernel_source/linux-5.4.281$ ls -la .config
 
 ### make menuconfig UI的示例用法
 
-为了熟悉使用 kbuild 菜单系统中的 `menuconfig` 目标，让我们逐步完成一个流程，导航到一个名为 "Kernel .config support" 的三态菜单项。默认情况下，这个选项是关闭的，所以我们将其打开，也就是将其设置为 `y`，将其内置到内核镜像中。你可以在主屏幕的 "General Setup" 主菜单项下找到它。
+为了熟悉使用 kbuild 菜单系统中的 `menuconfig` 目标，让我们逐步完成一个流程，导航到一个名为 "Kernel .config support" 的三态菜单项。默认情况下，这个选项是关闭的，所以我们将其打开，也就是将其设置为 `y`，将其内置到内核镜像中。我们可以在主屏幕的 "General Setup" 主菜单项下找到它。
 
 那么，开启这个功能到底能实现什么呢？当这个选项设置为 `y`（或者，如果设置为 `M`，那么一个内核模块将会被生成，并且一旦加载），当前运行的内核的配置设置可以通过以下两种方式随时查阅：
 
 1. 运行 `scripts/extract-ikconfig` 脚本。
-2. 直接读取 `/proc/config.gz` 伪文件的内容（当然，这个文件是 gzip(1) 压缩的；你需要先解压它，然后再读取）。
+2. 直接读取 `/proc/config.gz` 伪文件的内容（当然，这个文件是 gzip(1) 压缩的；我们需要先解压它，然后再读取）。
 
 作为一个学习练习，我们将学习如何为 x86-64 架构配置 5.4 Linux 内核，并将内核配置选项设置为下表所示的值。现在，不必担心每个选项的具体含义；这只是为了熟悉和练习内核配置系统的操作。
 
@@ -573,11 +573,11 @@ scc@scczx:~/kernel_learn/kernel_source/linux-5.4.281$ ls -la .config
    - 我们正在尝试做什么。在这里，我们希望设置内核发布字符串的 `-EXTRAVERSION` 组件。
    - 这个内核配置选项在 `menuconfig` 界面中的位置。在这个例子中，它位于 "General Setup" 子菜单中，并且在该子菜单下有一个名为 "Local version - append to kernel release" 的菜单项。我们将其写为 `General Setup / Local version - append to kernel release`。
 
-3. **第三列**：指定了内核配置选项的名称，表示为 `CONFIG_<FOO>`。如果需要，你可以在菜单系统中搜索这个选项名称。在这个例子中，它被称为 `CONFIG_LOCALVERSION`。
+3. **第三列**：指定了内核配置选项的名称，表示为 `CONFIG_<FOO>`。如果需要，我们可以在菜单系统中搜索这个选项名称。在这个例子中，它被称为 `CONFIG_LOCALVERSION`。
 
-4. **第四列**：显示了这个内核配置选项的原始值以及我们希望你将其更改为的值（“新”值）。格式为 `原始值 -> 新值`。在我们的例子中，原始值是 `(none)`，新值是 `-llkd01`，这意味着 `-EXTRAVERSION` 字符串组件的原始值为空，我们希望你将其更改为 `-llkd01`。
+4. **第四列**：显示了这个内核配置选项的原始值以及我们希望我们将其更改为的值（“新”值）。格式为 `原始值 -> 新值`。在我们的例子中，原始值是 `(none)`，新值是 `-llkd01`，这意味着 `-EXTRAVERSION` 字符串组件的原始值为空，我们希望我们将其更改为 `-llkd01`。
 
-对于其他一些项目，可能不那么显而易见——例如 `n -> m`；这意味着什么？`n -> m` 表示你应该将原始值从 `n`（未选择）更改为 `m`（选择为内核模块进行构建）。类似地，`y -> n` 表示将配置选项从开启改为关闭。
+对于其他一些项目，可能不那么显而易见——例如 `n -> m`；这意味着什么？`n -> m` 表示我们应该将原始值从 `n`（未选择）更改为 `m`（选择为内核模块进行构建）。类似地，`y -> n` 表示将配置选项从开启改为关闭。
 
 |                           **功能**                           | **在 make menuconfig UI 中的效果和位置**                     | **选择 \<Help> 按钮查看精确的 CONFIG_\<FOO> 选项** | **值：原始值 --> 新值**     |
 | :----------------------------------------------------------: | ------------------------------------------------------------ | -------------------------------------------------- | --------------------------- |
@@ -595,33 +595,33 @@ scc@scczx:~/kernel_learn/kernel_source/linux-5.4.281$ ls -la .config
 
 下面我们以第二项 **Kernel config file support**配置为例说明应该如何进行配置修改：
 
-![image-20240818142609094](C:\Users\SiChuchen\Pictures\typora-images\image-20240818142609094.png)
+![image-20240818142609094](./images/image-20240818142609094.png)
 
 首先，根据表格第二列的内容，我们知道了需要在 `General Setup / Kernel .config support` 下对其进行配置，所以先就进入 General Setup（找到相关项，按 Enter 进入），并找到 Kernel .config support 所在位置：
 
-![image-20240818142811472](C:\Users\SiChuchen\Pictures\typora-images\image-20240818142811472.png)
+![image-20240818142811472](./images/image-20240818142811472.png)
 
 左右方向键切换，可以选中并进入该项的 \<help> 选项：
 
-![image-20240818142947507](C:\Users\SiChuchen\Pictures\typora-images\image-20240818142947507.png)
+![image-20240818142947507](./images/image-20240818142947507.png)
 
-![image-20240818143022256](C:\Users\SiChuchen\Pictures\typora-images\image-20240818143022256.png)
+![image-20240818143022256](./images/image-20240818143022256.png)
 
 按 Enter 退出之后，按 `空格` 将 **\<M>（被编译为模块）---->  \<*>（被内置到内核中）**
 
-![image-20240818143708963](C:\Users\SiChuchen\Pictures\typora-images\image-20240818143708963.png)
+![image-20240818143708963](./images/image-20240818143708963.png)
 
 然后，找到下一项，按一下空格，即可完成表中第三个的配置：
 
-![image-20240818143850239](C:\Users\SiChuchen\Pictures\typora-images\image-20240818143850239.png)
+![image-20240818143850239](./images/image-20240818143850239.png)
 
 ······
 
 当所有都配置完之后，按 \<Exit> 退出（直到根目录才会弹出确认框，如果想继续编辑则 按两次 \<Esc> 即可返回编辑页面），在确认框选择 \<yes> 保存并返回 shell：
 
-![image-20240818145022137](C:\Users\SiChuchen\Pictures\typora-images\image-20240818145022137.png)
+![image-20240818145022137](./images/image-20240818145022137.png)
 
-![image-20240818145037292](C:\Users\SiChuchen\Pictures\typora-images\image-20240818145037292.png)
+![image-20240818145037292](./images/image-20240818145037292.png)
 
 新的内核配置会被保存为一个简单的 ASCII 文本文件，文件名为 `.config`，位于内核源码树的根目录下。具体来说，它被保存为 `${LLKD_KSRC}/.config`。
 
@@ -634,13 +634,13 @@ grep LOCALVERSION .config
 # 中间这个值是不是就是我们表中第三列值
 ```
 
-![image-20240818145710469](C:\Users\SiChuchen\Pictures\typora-images\image-20240818145710469.png)
+![image-20240818145710469](./images/image-20240818145710469.png)
 
 ### 关于KBuild的更多信息
 
 在内核源码树根目录中通过 `make menuconfig` 或其他方法创建或编辑 `.config` 文件，并不是 kbuild 系统处理配置的最终步骤。接下来，kbuild 系统会内部调用一个名为 `syncconfig` 的目标（之前曾被错误命名为 `silentoldconfig`）。这个目标会让 kbuild 生成一些头文件，这些头文件在构建内核的设置中进一步使用。这些文件包括 `include/config` 目录下的一些元头文件，以及 `include/generated/autoconf.h` 头文件。后者将内核配置存储为 C 语言的宏，从而使内核的 Makefile 和内核代码能够根据某个内核功能是否可用来做出决策。
 
-接下来，如果你在寻找某个特定的内核配置选项时遇到了困难，也不用担心，`menuconfig` 用户界面系统提供了一个搜索配置参数的功能。就像著名的 `vi` 编辑器一样，按下 `/`（斜杠键）会弹出一个搜索对话框，然后你可以输入你的搜索词（可以带 `CONFIG_` 前缀，也可以不带），并选择 `<Ok>` 按钮来进行搜索。
+接下来，如果我们在寻找某个特定的内核配置选项时遇到了困难，也不用担心，`menuconfig` 用户界面系统提供了一个搜索配置参数的功能。就像著名的 `vi` 编辑器一样，按下 `/`（斜杠键）会弹出一个搜索对话框，然后我们可以输入我们的搜索词（可以带 `CONFIG_` 前缀，也可以不带），并选择 `<Ok>` 按钮来进行搜索。
 
 ### 查找配置中的差异
 
@@ -651,7 +651,7 @@ grep LOCALVERSION .config
 ./scripts/diffconfig --help
 ```
 
-![image-20240818151441205](C:\Users\SiChuchen\Pictures\typora-images\image-20240818151441205.png)
+![image-20240818151441205](./images/image-20240818151441205.png)
 
 运行试试，可以看到中间有 `n -> y` ，这种就是我们进行修改过的：
 
@@ -685,7 +685,7 @@ $ ./scripts/diffconfig .config.old .config
 
 #### Kconfig* 文件
 
-位于内核源代码树根目录的 `Kconfig` 文件用于填充 `menuconfigUI` 的初始屏幕。如果你愿意的话，可以看看。它的工作原理是**在内核源代码树的不同文件夹中获取各种其他Kconfig文件**。下表总结了更重要的Kconfig* 文件以及它们在kbuild UI中提供的菜单：
+位于内核源代码树根目录的 `Kconfig` 文件用于填充 `menuconfigUI` 的初始屏幕。它的工作原理是**在内核源代码树的不同文件夹中获取各种其他Kconfig文件**。下表总结了更重要的Kconfig* 文件以及它们在kbuild UI中提供的菜单：
 
 |                           **菜单**                           | **Kconfig 文件位置**                       |
 | :----------------------------------------------------------: | :----------------------------------------- |
@@ -726,17 +726,17 @@ $ ./scripts/diffconfig .config.old .config
 
 向下滚动到文件中的适当位置；在这里，选择在 `config LOCALVERSION_AUTO` 之后插入我们的菜单项（144-155行）：
 
-![image-20240818155100502](C:\Users\SiChuchen\Pictures\typora-images\image-20240818155100502.png)
+![image-20240818155100502](./images/image-20240818155100502.png)
 
 保存退出，重新 `make menuconfig`，可以看到我们自己添加的内核配置菜单，也可以查看其 \<help> ，按空格打开该项：
 
-![image-20240818155340131](C:\Users\SiChuchen\Pictures\typora-images\image-20240818155340131.png)
+![image-20240818155340131](./images/image-20240818155340131.png)
 
-![image-20240818155420610](C:\Users\SiChuchen\Pictures\typora-images\image-20240818155420610.png)
+![image-20240818155420610](./images/image-20240818155420610.png)
 
 当我们按下空格打开该项，然后保存退出之后，可以看到其确实在 .config 文件中被设置为 on，但目前该配置并没有在内核内部自动生成的头文件中。
 
-![image-20240818155934123](C:\Users\SiChuchen\Pictures\typora-images\image-20240818155934123.png)
+![image-20240818155934123](./images/image-20240818155934123.png)
 
 编译一下：
 
@@ -747,7 +747,7 @@ make -j4
 
 可以看到有了：
 
-![image-20240818160637930](C:\Users\SiChuchen\Pictures\typora-images\image-20240818160637930.png)
+![image-20240818160637930](./images/image-20240818160637930.png)
 
 我们可以看到，同样的配置可以在一段内核代码中用作普通的C宏;例如，我们可以这样做：
 
