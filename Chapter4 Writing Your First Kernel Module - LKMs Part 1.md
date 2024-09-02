@@ -228,7 +228,7 @@ ls -l /lib/modules/$(uname -r)/
 
 ![image-20240821115540550](./images/image-20240821115540550.png)
 
-注意这个名为 `build` 的符号链接或软链接。它指向系统上内核头文件的位置。在上述代码中，它位于 `/usr/src//usr/src/linux-headers-5.4.0-150-generic/` 下，我们会将此信息提供给用于构建我们的内核模块的Makefile。
+注意这个名为 `build` 的符号链接或软链接。它指向系统上内核头文件的位置。在上述代码中，它位于 `/usr/src/linux-headers-5.4.0-150-generic/` 下，我们会将此信息提供给用于构建我们的内核模块的Makefile。
 
 我们 `Hello, world` 内核模块代码的第一行是 `#include <linux/init.h>`。编译器通过在 `/lib/modules/$(uname -r)/build/include/` 下搜索前面提到的内核头文件来解析这个包含。因此，通过跟随 `build` 软链接，我们可以看到它最终找到了这个头文件：
 
@@ -1045,7 +1045,7 @@ static int __init lkm_template_init(void)
 [ ... ]
 ```
 
-`pr_fmt()` 宏使用预定义的  `KBUILD_MODNAME`  宏来替换你的内核模块名称，并使用 GCC 的  `__func__`  规范来显示我们当前运行的函数名称。（你甚至可以添加一个由相应的 `__LINE__` 宏匹配的 `%d` 来显示行号）。所以，关键是：我们在这个 LKM 的 `init` 函数中发出的 `pr_info()` 将在内核日志中显示如下：
+`pr_fmt()` 宏使用预定义的  `KBUILD_MODNAME`  宏来替换我们的内核模块名称，并使用 GCC 的  `__func__`  规范来显示我们当前运行的函数名称。（我们甚至可以添加一个由相应的 `__LINE__` 宏匹配的 `%d` 来显示行号）。所以，关键是：我们在这个 LKM 的 `init` 函数中发出的 `pr_info()` 将在内核日志中显示如下：
 
 ```text
 [381534.391966] lkm_template:lkm_template_init(): inserted
