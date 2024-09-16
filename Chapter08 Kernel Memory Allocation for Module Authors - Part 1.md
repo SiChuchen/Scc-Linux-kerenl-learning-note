@@ -1,4 +1,4 @@
-# Chapter 8 Kernel Memory Allocation for Module Authors - Part 1
+# Chapter8 Kernel Memory Allocation for Module Authors - Part 1
 
 在前两章中，我们讨论了内核内部结构及架构，以及内存管理的基本原理，这些内容为本章和下一章的学习奠定了必要的基础。在本章和接下来的章节中，我们将深入探讨各种方法下内核内存的实际分配与释放。我们会通过可以测试和调整的内核模块来演示这些方法，详细阐述其中的原因和原理，并提供许多实际应用中的技巧和窍门，以帮助内核或驱动程序开发者在内核模块中更高效地管理内存。
 

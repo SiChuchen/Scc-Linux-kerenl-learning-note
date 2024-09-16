@@ -1,4 +1,4 @@
-# Chapter 7 Memory Management Internals – Essentials
+# Chapter7 Memory Management Internals – Essentials
 
 本章将帮助我们深入了解 Linux 操作系统如何执行内存管理。这包括探讨虚拟内存（VM）划分，深入研究进程的用户模式和内核段，并介绍内核如何管理物理内存的基本原理。我们将会理解进程和系统的内存映射：包括虚拟和物理内存映射。
 
