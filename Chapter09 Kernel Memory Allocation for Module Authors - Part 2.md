@@ -241,7 +241,7 @@ cd ~/kernel_learn/Linux-Kernel-Programming-master/ch9/slab_custom/
 ../../lkm slab_custom
 ```
 
-![image-20240904110257242](./../../Pictures/typora-images/note-section2/image-20240904110257242.png)
+![image-20240904110257242](./images/image-20240904110257242.png)
 
 **要注意的两个关键点：**
 
@@ -255,7 +255,7 @@ sudo vmstat -m | head -n1
 sudo vmstat -m | grep our_ctx
 ```
 
-![image-20240904120002817](./../../Pictures/typora-images/note-section2/image-20240904120002817.png)
+![image-20240904120002817](./images/image-20240904120002817.png)
 
 正如前面代码中所强调的，每个分配对象的实际大小不是 328 字节，而是 768 字节（确切的数字会有所不同；在某些情况下，我看到的是 448 字节）。正如我们之前看到的，这一点非常重要，需要你意识到并进行检查。在后续的 “在 slab 层进行调试” 部分，我们展示了另一种检查这种情况的简单方法。
 
@@ -357,11 +357,11 @@ grep -w CONFIG_SLUB_DEBUG /boot/config-5.4.281-sccxz01
 
 4. **尝试演示：通过 `kmem_cache_alloc()`（或等效方法）分配一些 slab 内存**。下面是一个截图显示了分配的内存，以及在执行 `memset()` 将前 16 字节设置为 `z`（0x7a）后的同一区域的内容：
 
-![image-20240904125306910](./../../Pictures/typora-images/note-section2/image-20240904125306910.png)
+![image-20240904125306910](./images/image-20240904125306910.png)
 
 5. **接下来，制造 bug。** 在清理方法中，我们释放了分配的 slab，然后尝试再次使用它，执行另一次 `memset()` 操作，从而触发了 UAF（使用后释放）bug。再次，我们通过另一个截图展示了内核日志：
 
-![image-20240904125917177](./../../Pictures/typora-images/note-section2/image-20240904125917177.png)
+![image-20240904125917177](./images/image-20240904125917177.png)
 
 我们用 `0x21`（ASCII 字符 `!`，这是有意的）覆盖了 `0x6b` 的毒化值。在释放来自 slab 缓存的缓冲区后，如果内核在有效负载中检测到任何不是毒化值（`POISON_FREE = 0x6b = ASCII 'k'`）的值，就会触发这个 bug。
 
@@ -384,7 +384,7 @@ grep -w CONFIG_SLUB_DEBUG /boot/config-5.4.281-sccxz01
      sudo cat /sys/kernel/slab/our_ctx/object_size /sys/kernel/slab/our_ctx/slab_size
      ```
 
-     ![image-20240904134011847](./../../Pictures/typora-images/note-section2/image-20240904134011847.png)
+     ![image-20240904134011847](./images/image-20240904134011847.png)
 
    - 此外，还有许多其他的伪文件；执行 `ls()` 在 `/sys/kernel/slab/<name-of-slab>/` 下会显示它们。例如，通过 `cat` 命令查看 `ch9/slab_custom` slab 缓存的构造函数伪文件：
 
@@ -540,7 +540,7 @@ static void __exit vmalloc_demo_exit(void)
 
 运行结果如下：
 
-![image-20240904140539730](./../../Pictures/typora-images/note-section2/image-20240904140539730.png)
+![image-20240904140539730](./images/image-20240904140539730.png)
 
 ### 关于内存分配和需求分页的简要说明
 
@@ -626,7 +626,7 @@ void *kvmalloc_node(size_t size, gfp_t flags, int node);
 
 关于我们在本节中看到的 `vmalloc_demo` 内核模块，再快速看一下代码（`ch9/vmalloc_demo/vmalloc_demo.c`）。我们使用了 `kvmalloc()` 以及 `kcalloc()`。我们再次运行它并查看输出：
 
-![image-20240904143757952](./../../Pictures/typora-images/note-section2/image-20240904143757952.png)输出中看到 API 返回的实际（内核虚拟)地址。请注意，它们都位于内核的 `vmalloc` 区域内。
+![image-20240904143757952](./images/image-20240904143757952.png)输出中看到 API 返回的实际（内核虚拟)地址。请注意，它们都位于内核的 `vmalloc` 区域内。
 
 使用 `kvmalloc()` API 请求大量内存（5 MB）导致了内部调用 `vmalloc()` API（`kmalloc()` API 失败且不会发出警告，也不会重试），因此，我们可以看到它在 `/proc/vmallocinfo` 中的记录。
 
@@ -699,7 +699,7 @@ sudo insmod vmalloc_demo.ko
 dmesg
 ```
 
-![image-20240904152650496](./../../Pictures/typora-images/note-section2/image-20240904152650496.png)
+![image-20240904152650496](./images/image-20240904152650496.png)
 
 这证明了我们使用 `__vmalloc()` API 成功地将内存区域设置为只读。同样，前述（部分可见的）内核诊断或 Oops 信息的解释超出了本书的范围。然而，很容易看到该问题的根本原因：以下几行明确指出了这个错误的原因：
 
@@ -745,7 +745,7 @@ dmesg
 
 下面是一个显示内核内存分配 API 的图示（对模块/驱动开发者暴露的）：
 
-![image-20240904164514025](./../../Pictures/typora-images/note-section2/image-20240904164514025.png)
+![image-20240904164514025](./images/image-20240904164514025.png)
 
 ### 为内核内存分配选择合适的 API
 
@@ -758,7 +758,7 @@ dmesg
 
 首先，为了根据要分配的内存类型、数量和连续性来决定使用哪个 API，请参考以下流程图（从右上方的 “Start here” 标签开始）：
 
-![image-20240904164731245](./../../Pictures/typora-images/note-section2/image-20240904164731245.png)
+![image-20240904164731245](./images/image-20240904164731245.png)
 
 当然，这并不简单；我们还应该回顾本章前面讨论过的细节内容，包括应使用的 GFP 标志（以及在原子上下文中不要休眠的规则）；实际上，以下情况适用：
 
@@ -1047,7 +1047,7 @@ grep CommitLimit /proc/meminfo
 
 查看内核日志，确实表明 OOM killer 曾经“拜访”过我们！以下部分截图仅显示了虚拟机上的堆栈转储：
 
-![image-20240904201111186](./../../Pictures/typora-images/note-section2/image-20240904201111186.png)
+![image-20240904201111186](./images/image-20240904201111186.png)
 
 阅读图中的内核模式堆栈时，请采用自下而上的顺序（忽略以“?”开头的帧）：显然发生了页面错误；我们可以看到调用帧：`page_fault()` | `do_page_fault()` | [...] | `__handle_mm_fault()` | [...] | `__alloc_pages_nodemask()`。
 
